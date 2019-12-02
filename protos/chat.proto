@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package grpc;
+
+// Пустые сообщения. В gRPC обязательно у любой функций должен быть вход и выход.
+message Empty {}
+message Nothing {}
+
+// Сообщение, которое мы будем отправлять
+// Не очень красиво, что оно называется Message, но для чата получается логично
+message Message {
+    string author = 1;
+    string text = 2;
+}
+
+// Сервис чата
+service Chatting {
+    // Функция, возвращающая ПОТОК сообщений чата
+    rpc MessageStream (Empty) returns (stream Message);
+    // Функция отправки сообщения в чат
+    rpc SendMessage (Message) returns (Nothing);
+}
